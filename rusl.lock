@@ -1,5 +1,16 @@
 version = "1"
 
+[dependencies."schema:dan/schemas/vizzy.geo-event"]
+version = "0.1.0"
+integrity = "9204f00fa07da7d3ed16a775b1684cb339c33793debe3d0ca002447576bef2b2"
+source = "https://resources.rusl.com"
+dependencies = ["schema:pragmatic/schemas/geo"]
+
+[dependencies."schema:dan/schemas/vizzy.viz-config"]
+version = "0.1.0"
+integrity = "78141413ff82022f00d611e8d865a3bdb25d47bc2d5692d638b5daf92a221b8d"
+source = "https://resources.rusl.com"
+
 [dependencies."schema:pragmatic/schemas/geo"]
 version = "0.1.0"
 integrity = "8894e94c693c101964cd816797e16c17cd45c0b4954cee7adddd2eee0371cdd7"

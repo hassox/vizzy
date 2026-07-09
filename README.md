@@ -113,8 +113,7 @@ Chrome kiosk example:
 apps/generator       synthetic geo-events over WebSocket
 apps/viz             globe.gl client, arc engine, themes, UI
 packages/contracts   shared TypeScript types + validators
-schemas/dan          local JSON Schema drafts (geo-event, viz-config)
-schemas/pragmatic    vendored geo primitives (Rusl)
+schemas/             vendored from Rusl (`rusl install`)
 SCHEMA.md            contract source of truth
 docs/plans           design notes
 ```
@@ -123,12 +122,16 @@ docs/plans           design notes
 
 This repo is **schema-driven**. Before changing event or config shapes, read **[SCHEMA.md](./SCHEMA.md)**.
 
-| Schema | Role |
+| Resource | Role |
 |---|---|
-| `dan/schemas/geo-event` | Wire format: one journey message |
-| `dan/schemas/viz-config` | Client library: sources + presets (not on the wire) |
+| `dan/schemas/vizzy.geo-event` | Wire format: one journey message |
+| `dan/schemas/vizzy.viz-config` | Client library: sources + presets (not on the wire) |
+| `pragmatic/schemas/geo` | GeoJSON point primitives |
 
-Drafts live under `schemas/dan/`. Registry workflow uses [Rusl](https://rusl.com) (`rusl.bundle.toml`).
+```sh
+# requires Rusl CLI ≥ 0.6
+rusl install
+```
 
 ## License
 

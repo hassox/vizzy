@@ -1,0 +1,66 @@
+{
+  "$id": "https://resources.rusl.com/resources/dan/schemas/vizzy.geo-event",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A single geolocated journey from origin to destination. Visual lifecycle (launch, flight, impact) is owned by the visualizer, not this schema. magnitude/priority/velocity are 0\u2013100 display scales, not SI units.",
+  "properties": {
+    "correlationId": {
+      "description": "Groups related journeys (e.g. OTel traceId via adapter).",
+      "minLength": 1,
+      "type": "string"
+    },
+    "destination": {
+      "$ref": "https://resources.rusl.com/resources/pragmatic/geo#/$defs/point",
+      "description": "Where the journey ends (GeoJSON Point, lon-first WGS84)."
+    },
+    "emittedAt": {
+      "description": "ISO 8601 timestamp when the producer emitted this event.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "id": {
+      "description": "Unique event ID (UUID recommended).",
+      "minLength": 1,
+      "type": "string"
+    },
+    "magnitude": {
+      "default": 50,
+      "description": "Intrinsic scale of the event (blast yield, packet size, shipment tonnage). Theme maps to arc thickness / impact radius.",
+      "maximum": 100,
+      "minimum": 0,
+      "type": "number"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "description": "Theme-specific extras. Themes that know a key use it; others ignore it.",
+      "type": "object"
+    },
+    "origin": {
+      "$ref": "https://resources.rusl.com/resources/pragmatic/geo#/$defs/point",
+      "description": "Where the journey started (GeoJSON Point, lon-first WGS84)."
+    },
+    "priority": {
+      "default": 50,
+      "description": "Urgency relative to other events. Theme maps to glow / color intensity.",
+      "maximum": 100,
+      "minimum": 0,
+      "type": "number"
+    },
+    "velocity": {
+      "default": 50,
+      "description": "Relative travel speed (display scale). Theme maps to arc flight duration. Default 50 is middle-of-the-road.",
+      "maximum": 100,
+      "minimum": 0,
+      "type": "number"
+    }
+  },
+  "required": [
+    "id",
+    "origin",
+    "destination",
+    "emittedAt"
+  ],
+  "title": "GeoEvent",
+  "type": "object",
+  "version": "0.1.0"
+}

@@ -1,0 +1,269 @@
+{
+  "$defs": {
+    "preset": {
+      "additionalProperties": false,
+      "description": "Full configuration for one viz run / wall story. The wall title is the preset label \u2014 no separate name field.",
+      "properties": {
+        "audio": {
+          "default": false,
+          "type": "boolean"
+        },
+        "createdAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "description": "Wall masthead subtitle / about.",
+          "maxLength": 400,
+          "type": "string"
+        },
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "maxConcurrent": {
+          "default": 200,
+          "description": "Max live arcs \u2014 relative top-N by priority.",
+          "maximum": 500,
+          "minimum": 10,
+          "type": "integer"
+        },
+        "playbook": {
+          "default": null,
+          "description": "Optional generator scenario id to start with.",
+          "maxLength": 64,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/sourceBinding"
+        },
+        "spin": {
+          "default": true,
+          "description": "Auto-rotate when true; pin view when false.",
+          "type": "boolean"
+        },
+        "theme": {
+          "default": "ember",
+          "description": "Theme id. Unknown ids fall back to the client default.",
+          "maxLength": 64,
+          "minLength": 1,
+          "type": "string"
+        },
+        "title": {
+          "description": "Wall masthead title and preset label in the picker.",
+          "maxLength": 120,
+          "minLength": 1,
+          "type": "string"
+        },
+        "updatedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "version": {
+          "const": 1,
+          "description": "Preset document version. Bump when breaking fields change.",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "source",
+        "title"
+      ],
+      "type": "object"
+    },
+    "source": {
+      "additionalProperties": false,
+      "description": "Named bookmark for an event feed endpoint.",
+      "properties": {
+        "createdAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "id": {
+          "description": "Stable client id (UUID recommended).",
+          "minLength": 1,
+          "type": "string"
+        },
+        "name": {
+          "description": "Human label in the source picker.",
+          "maxLength": 80,
+          "minLength": 1,
+          "type": "string"
+        },
+        "notes": {
+          "description": "Optional free-text (env, owner, caveats).",
+          "maxLength": 400,
+          "type": "string"
+        },
+        "updatedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "url": {
+          "description": "WebSocket URL (ws:// or wss://). Clients may normalize host:port and http(s) before save.",
+          "maxLength": 512,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "url"
+      ],
+      "type": "object"
+    },
+    "sourceBinding": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "url"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "required": [
+              "url"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "saved"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "required": [
+              "sourceId"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "cycle"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "required": [
+              "sourceIds"
+            ]
+          }
+        }
+      ],
+      "description": "How a preset connects to an event feed: ad-hoc URL, one saved source, or a cycle through saved sources.",
+      "properties": {
+        "cycleIntervalSec": {
+          "default": 60,
+          "description": "Seconds per source when mode=cycle.",
+          "maximum": 3600,
+          "minimum": 5,
+          "type": "number"
+        },
+        "mode": {
+          "enum": [
+            "url",
+            "saved",
+            "cycle"
+          ],
+          "type": "string"
+        },
+        "sourceId": {
+          "description": "Library source id when mode=saved.",
+          "minLength": 1,
+          "type": "string"
+        },
+        "sourceIds": {
+          "description": "Ordered library source ids when mode=cycle.",
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "type": "array"
+        },
+        "url": {
+          "description": "Ad-hoc WebSocket URL when mode=url.",
+          "maxLength": 512,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://resources.rusl.com/resources/dan/schemas/vizzy.viz-config",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Client-side Vizzy configuration. One schema covers a single run (dashboard preset), named source bookmarks, and the local library envelope. Not an event wire format \u2014 only geo-event rides the WebSocket.",
+  "properties": {
+    "activePresetId": {
+      "default": null,
+      "description": "Last-applied preset id, if any.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "presets": {
+      "description": "Saved full run configurations.",
+      "items": {
+        "$ref": "#/$defs/preset"
+      },
+      "maxItems": 50,
+      "type": "array"
+    },
+    "sources": {
+      "description": "Named event feed bookmarks.",
+      "items": {
+        "$ref": "#/$defs/source"
+      },
+      "maxItems": 100,
+      "type": "array"
+    },
+    "updatedAt": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "version": {
+      "const": 1,
+      "description": "Library document version.",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "version",
+    "sources",
+    "presets"
+  ],
+  "title": "VizConfig",
+  "type": "object",
+  "version": "0.1.0"
+}

@@ -1,6 +1,6 @@
 /**
  * Viz client configuration types.
- * Shape source of truth: schemas/dan/viz-config.schema.json + SCHEMA.md
+ * Shape source of truth: schemas/dan/vizzy.viz-config.schema.json + SCHEMA.md
  *
  * One schema, three conceptual pieces via $defs:
  *   source         — named feed bookmark
