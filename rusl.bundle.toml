@@ -1,0 +1,4 @@
+[rusl]
+
+[rusl.resources]
+"pragmatic/schemas/geo" = ">=0.1.0"

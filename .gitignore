@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+apps/*/dist/
+packages/*/dist/
+*.tsbuildinfo
+
+# Logs & caches
+*.log
+npm-debug.log*
+.vite/
+.cache/
+.turbo/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*~
+
+# Test / coverage
+coverage/
+.nyc_output/
+
+# Local scratch
+*.local
+tmp/
+.scratch/

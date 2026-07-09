@@ -1,0 +1,22 @@
+{
+  "name": "vizzy",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w @vizzy/contracts && npm run build -w @vizzy/generator && npm run build -w @vizzy/viz",
+    "dev:generator": "npm run dev -w @vizzy/generator",
+    "dev:viz": "npm run dev -w @vizzy/viz",
+    "dev": "npm run build -w @vizzy/contracts && concurrently -k -n gen,viz -c blue,magenta \"npm run dev -w @vizzy/generator\" \"npm run dev -w @vizzy/viz\""
+  },
+  "overrides": {
+    "three": "^0.185.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.8.2"
+  }
+}
