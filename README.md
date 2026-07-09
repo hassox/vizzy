@@ -122,6 +122,8 @@ docs/plans           design notes
 
 This repo is **schema-driven**. Before changing event or config shapes, read **[SCHEMA.md](./SCHEMA.md)**.
 
+Published package on Rusl: **[dan / vizzy](https://rusl.com/dan/schemas?package=vizzy)**
+
 | Resource | Role |
 |---|---|
 | `dan/schemas/vizzy.geo-event` | Wire format: one journey message |
