@@ -1,6 +1,6 @@
 /**
  * Shared Vizzy contracts.
- * Shape source of truth: schemas/dan/*.schema.json + SCHEMA.md
+ * Shape source of truth: Rusl dan/schemas/vizzy.* (vendored under schemas/) + SCHEMA.md
  */
 
 export {

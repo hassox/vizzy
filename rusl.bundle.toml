@@ -2,3 +2,5 @@
 
 [rusl.resources]
 "pragmatic/schemas/geo" = ">=0.1.0"
+"dan/schemas/vizzy.geo-event" = ">=0.1.0"
+"dan/schemas/vizzy.viz-config" = ">=0.1.0"
